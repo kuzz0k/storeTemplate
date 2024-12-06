@@ -5,12 +5,13 @@ const User = sequelize.define('user', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   email: {type: DataTypes.STRING, unique: true},
   password: {type: DataTypes.STRING},
-})
-
-const Role = sequelize.define('role', {
-  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   role: {type: DataTypes.STRING, defaultValue: "USER"}
 })
+
+// const Role = sequelize.define('role', {
+//   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+//   role: {type: DataTypes.STRING, defaultValue: "USER"}
+// })
 
 const Basket = sequelize.define('basket', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -54,8 +55,8 @@ const TypeBrand = sequelize.define('type_brand', {
 })
 
 
-User.hasMany(Role)
-Role.belongsTo(User)
+// User.hasMany(Role)
+// Role.belongsTo(User)
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -86,7 +87,7 @@ Brand.belongsToMany(Type, {through: TypeBrand })
 
 module.exports = {
   User,
-  Role,
+  // Role,
   Basket,
   BasketDevice,
   Device,
