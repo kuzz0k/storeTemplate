@@ -14,7 +14,7 @@ const NavBar = observer(() => {
         </div>
       :
         <div>
-          <button onClick={() => user.setIsAuth(true)}>Авторизоваться</button>
+          <button onClick={() => user.setIsAuth}>Авторизоваться</button>
         </div>
       }
     </nav>
