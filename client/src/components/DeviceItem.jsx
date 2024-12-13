@@ -7,7 +7,7 @@ const DeviceItem = ({device}) => {
   const history = useNavigate()
   return (
     <div onClick={() => history(DEVICE_ROUTE + '/' + device.id)}>
-      <img src={device.img} alt="" />
+      <img src={process.env.REACT_APP_API_URL + device.img} alt="" />
       <div>Nike</div>
       <div>
         <div>{device.rating}</div>

@@ -1,14 +1,25 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import star from '../assets/star.png'
+import { useParams } from 'react-router-dom'
+import { fetchDevice } from '../http/deviceApi'
 
 
 const DevicePage = () => {
-  const device = {id: 1, name: 'product1', rating: 5, price: 1000, img: ''}
+  const [device, setDevice] = useState({info: []})
+  const {id} = useParams()
+
+  useEffect(() => {
+    fetchDevice(id).then(data => setDevice(data))
+
+  }, [])
+  
+
+
   const description = []
   return (
     <div>
       <div className='Row'>
-        <img src={device.img} alt="" />
+        <img src={process.env.REACT_APP_API_URL + device.img} alt="" />
         <div>
           <h2>{device.name}</h2>
         </div>
@@ -24,7 +35,7 @@ const DevicePage = () => {
       </div>
       <div className="description">
         <h2>Характеристики</h2>
-        {description.map(info =>
+        {device.info.map(info =>
           <div key={info.id}>
             {info.title}: {info.description}
           </div>
