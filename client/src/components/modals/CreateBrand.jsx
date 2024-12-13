@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { createBrand } from "../../http/deviceApi";
 
 const CreateBrand = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для управления модальным окном
-  const [inputValue, setInputValue] = useState(""); // Состояние для хранения значения инпута
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [inputValue, setInputValue] = useState("")
 
 
   const handleAdd = () => {
-    console.log("Добавлено:", inputValue);
-    setInputValue("");
+    createBrand({name: inputValue}).then(data => setInputValue(""))
     setIsModalOpen(false);
   };
 

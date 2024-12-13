@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import { createType } from "../../http/deviceApi";
 
 const CreateType = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для управления модальным окном
-  const [inputValue, setInputValue] = useState(""); // Состояние для хранения значения инпута
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [inputValue, setInputValue] = useState("")
 
-  const handleOpenModal = () => setIsModalOpen(true); // Открыть модальное окно
-  const handleCloseModal = () => setIsModalOpen(false); // Закрыть модальное окно
+  const handleOpenModal = () => setIsModalOpen(true)
+  const handleCloseModal = () => setIsModalOpen(false)
 
   const handleAdd = () => {
-    console.log("Добавлено:", inputValue); // Вывод значения инпута в консоль
-    setInputValue(""); // Очистка инпута
-    handleCloseModal(); // Закрытие модального окна
+    createType({name: inputValue}).then(data => setInputValue(""))
+    handleCloseModal()
   };
 
   return (
