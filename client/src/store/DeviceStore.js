@@ -14,10 +14,10 @@ export default class DeviceStore {
     this._types = types
   }
   setBrands(brands) {
-      this._brands = brands
+    this._brands = brands
   }
   setDevices(devices) {
-      this._devices = devices
+    this._devices = devices
   }
 
   setSelectedType(type) {
@@ -31,10 +31,10 @@ export default class DeviceStore {
     return this._types
   }
   get brands() {
-      return this._brands
+    return this._brands
   }
   get devices() {
-      return this._devices
+    return this._devices
   }
 
   get selectedType() {

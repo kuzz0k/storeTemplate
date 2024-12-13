@@ -10,7 +10,6 @@ const DevicePage = () => {
 
   useEffect(() => {
     fetchDevice(id).then(data => setDevice(data))
-
   }, [])
   
 
