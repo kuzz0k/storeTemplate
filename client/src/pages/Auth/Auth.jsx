@@ -1,9 +1,10 @@
 import { useContext, useState } from "react"
-import { login, registration } from "../http/userApi"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/consts"
+import { login, registration } from "../../http/userApi"
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../../utils/consts"
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import {observer} from 'mobx-react-lite'
-import { Context } from "../index"
+import { Context } from "../../index"
+import styles from './Auth.module.scss'
 
 
 
@@ -33,7 +34,7 @@ const Auth = observer(() => {
   }
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h2>{isLogin?'Авторизация':'Регистрация'}</h2>
       <form onSubmit={click}>
         <input type="text" placeholder='Введите ваш email' value={email} onChange={e => setEmail(e.target.value)}/>
