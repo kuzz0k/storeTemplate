@@ -8,7 +8,7 @@ const Pagination = observer(() => {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = Math.ceil(device.totalCount / device.limit)
 
-
+  
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;

@@ -4,13 +4,22 @@ import {observer} from 'mobx-react-lite'
 
 const TypeBar = observer(() => {
   const {device} = useContext(Context)
+
+  const handleClick = (type) => {
+    if (type === device.selectedType) {
+      device.setSelectedType({})
+    } else {
+      device.setSelectedType(type)
+    }
+  }
+
   return (
     <div>
       {device.types.map(type => 
         <div 
         className="type" 
         key={type.id} 
-        onClick={device.setSelectedType(type)}
+        onClick={() => handleClick(type)}
         >
           {type.name}
         </div>
