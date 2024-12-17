@@ -22,9 +22,7 @@ const CreateDevice = observer(() => {
     fetchBrands().then(data => device.setBrands(data))
   }, [isModalOpen])
   
-  useEffect(() => {
-    console.log(selectedBrand, selectedType)
-  }, [selectedType, selectedBrand])
+
   
   
   const addInfo = () => {
