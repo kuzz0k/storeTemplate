@@ -39,49 +39,93 @@ class BasketController {
 
 
   async addToCart(req, res) {
-      const { deviceId, quantity } = req.body;
-      const token = req.headers.authorization.split(' ')[1]
-      const { id } = jwt.verify(token, process.env.SECRET_KEY);
-      console.log(id)
-      let basket = await Basket.findOne({ userId: id });
+    try {
+        const { deviceId, quantity } = req.body;
+        const token = req.headers.authorization.split(' ')[1];
+        const { id } = jwt.verify(token, process.env.SECRET_KEY);
 
-      BasketDevice.create({
-        deviceId: deviceId,
-        basketId: basket.id,
-        quantity: quantity
-      })
-      
-      
+        const basket = await Basket.findOne({ where: { userId: id } });
 
-      res.json({ message: 'Product added to cart!' });
+        const basketDevice = await BasketDevice.findOne({
+            where: { 
+                deviceId: deviceId, 
+                basketId: basket.id 
+            }
+        });
+
+        if (basketDevice) {
+            basketDevice.quantity += quantity;
+            await basketDevice.save();
+        } else {
+            await BasketDevice.create({
+                deviceId: deviceId,
+                basketId: basket.id,
+                quantity: quantity
+            });
+        }
+
+        res.json({ message: 'Product added to cart!' });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: "Ошибка сервера" });
+    }
   };
 
 
 
   async removeFromCart(req, res) {
-    const { productId } = req.body;
-    const token = req.header('Authorization').replace('Bearer ', '');
-    const { id } = jwt.verify(token, process.env.SECRET_KEY);
-    let cart = await Basket.findOne({ userId: id });
+    try {
+        const { deviceId } = req.body;
+        const token = req.headers.authorization.split(' ')[1];
+        const { id } = jwt.verify(token, process.env.SECRET_KEY);
 
-    const productIndex = cart.products.findIndex(p => p._id.toString() === productId);
-    cart.products.splice(productIndex, 1);
-    await cart.save();
-    res.json({ message: 'Product deleted from cart!' });
-  };
+        const basket = await Basket.findOne({ where: { userId: id } });
+
+        const deleted = await BasketDevice.destroy({
+            where: {
+                basketId: basket.id,
+                deviceId: deviceId
+            }
+        });
+
+        if (deleted) {
+            res.json({ message: 'Product deleted from cart!' });
+        } else {
+            res.status(404).json({ message: 'Product not found in cart!' });
+        }
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Ошибка сервера' });
+    }
+  }
+
 
 
 
   async updateCart(req, res) {
-    const { productId, newQuantity } = req.body;
-    const token = req.header('Authorization').replace('Bearer ', '');
-    const { id } = jwt.verify(token, 'secretKey');
-    let cart = await Basket.findOne({ userId: id });
-    const productIndex = cart.products.findIndex(p => p._id.toString() === productId);
-    cart.products[productIndex].quantity = newQuantity;
+    try {
+      const { deviceId, newQuantity } = req.body;
+      const token = req.headers.authorization.split(' ')[1];
+      const { id } = jwt.verify(token, process.env.SECRET_KEY);
 
-    await cart.save();
-    res.json({ message: 'Quantity updated' })
+      const basket = await Basket.findOne({ where: { userId: id } });
+
+      const basketDevice = await BasketDevice.findOne({
+          where: {
+              basketId: basket.id,
+              deviceId: deviceId
+          }
+      });
+
+      basketDevice.quantity = newQuantity
+      await basketDevice.save()
+
+      return res.json('Количество обновлено')
+
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Ошибка сервера' });
+    }
   };
 }
 
