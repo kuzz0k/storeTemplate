@@ -12,7 +12,7 @@ export const addToCart = async ( deviceId, quantity = 1 ) => {
 }
 
 export const removeFromCart = async ( deviceId ) => {
-  const {data} = await $authHost.delete('api/basket/delete/', { deviceId })
+  const {data} = await $authHost.delete('api/basket/delete/', { data: {deviceId} })
   return data
 }
 
