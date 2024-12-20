@@ -6,7 +6,7 @@ export const showCart = async () => {
   return data
 }
 
-export const addToCart = async ( deviceId, quantity ) => {
+export const addToCart = async ( deviceId, quantity = 1 ) => {
   const {data} = await $authHost.post('api/basket/add', { deviceId, quantity })
   return data
 }

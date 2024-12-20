@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import star from '../assets/star.png'
 import { useParams } from 'react-router-dom'
 import { fetchDevice } from '../http/deviceApi'
+import { addToCart } from '../http/basketApi'
 
 
 const DevicePage = () => {
@@ -12,7 +13,9 @@ const DevicePage = () => {
     fetchDevice(id).then(data => setDevice(data))
   }, [])
   
-
+  const addToBasket = (id) => {
+    addToCart(id)
+  }
 
   const description = []
   return (
@@ -29,7 +32,7 @@ const DevicePage = () => {
         </div>
         <div>
           <h3>{device.price}</h3>
-          <button>Добавить в корзину</button>
+          <button onClick={() => addToBasket(id)}>Добавить в корзину</button>
         </div>
       </div>
       <div className="description">
