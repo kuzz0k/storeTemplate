@@ -25,11 +25,6 @@ const DevicePage = () => {
         <div>
           <h2>{device.name}</h2>
         </div>
-        <div
-        style={{background: `url(${star}) no-repeat center center`, width:240, height: 240, backgroundSize: 'cover', fontSize:64}}
-        >
-          {device.rating}
-        </div>
         <div>
           <h3>{device.price}</h3>
           <button onClick={() => addToBasket(id)}>Добавить в корзину</button>
